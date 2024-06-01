@@ -10,6 +10,10 @@ namespace ProjetHopital
     {
         static void Main(string[] args)
         {
+            Test1();
+        }
+        static void Test1()
+        {
 
         }
     }
