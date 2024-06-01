@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HopitalDll;
 
 namespace ProjetHopital
 {
@@ -10,10 +11,7 @@ namespace ProjetHopital
     {
         static void Main(string[] args)
         {
-            Test1();
-        }
-        static void Test1()
-        {
+            // Data Source=(LocalDB)\MSSQLLocalDB
 
         }
     }

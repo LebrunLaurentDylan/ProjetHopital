@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.34829.251
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetHopital", "ProjetHopital\ProjetHopital.csproj", "{5DCFE676-5A5C-448F-B66E-A326D052CEA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HopitalDll", "HopitalDll\HopitalDll.csproj", "{BB58E43A-809D-4FD2-BCD2-69C490AEC71B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetHopital", "ProjetHopital\ProjetHopital.csproj", "{FEE144F0-AA76-4048-BECF-35986CA4565C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5DCFE676-5A5C-448F-B66E-A326D052CEA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DCFE676-5A5C-448F-B66E-A326D052CEA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DCFE676-5A5C-448F-B66E-A326D052CEA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DCFE676-5A5C-448F-B66E-A326D052CEA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB58E43A-809D-4FD2-BCD2-69C490AEC71B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB58E43A-809D-4FD2-BCD2-69C490AEC71B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB58E43A-809D-4FD2-BCD2-69C490AEC71B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB58E43A-809D-4FD2-BCD2-69C490AEC71B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEE144F0-AA76-4048-BECF-35986CA4565C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEE144F0-AA76-4048-BECF-35986CA4565C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEE144F0-AA76-4048-BECF-35986CA4565C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEE144F0-AA76-4048-BECF-35986CA4565C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
