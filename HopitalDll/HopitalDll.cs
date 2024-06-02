@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HopitalData;
 
 namespace HopitalDll
 {
-    interface IHopitalDataBase<T,PK>
+    interface IHopital<T,PK>
     {
         List<T> FindAll();
         T FindById(PK id);
@@ -14,7 +15,17 @@ namespace HopitalDll
         void Update(T obj);
         void Delete(PK id);
     }
-    interface IHopitalTableCreation
+
+    interface IHopitalVisites : IHopital<Visites,int>
+    {
+        List<Visites> FindByPatient(int idPatient);
+    }
+
+    interface IhopitalPatients : IHopital<Patients, int>
+    {
+
+    }
+    interface IhopitalAuth : IHopital<Authentification, int>
     {
 
     }
