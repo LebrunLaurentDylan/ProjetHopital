@@ -12,17 +12,30 @@ namespace ProjetHopital
     {
         static void Main(string[] args)
         {
-            //new HopitalPatientsSqlServer().Create(new Patients(043256,"Dupont","Jean", 35, 0608054070, "50 rue du Pont 44115 Basse-Goulaine"));
-            //new HopitalPatientsSqlServer().Create(new Patients(093257, "Dupont", "Jeannot", 30, 0608066070, "51 rue du Pont 44115 Basse-Goulaine"));
-            //new HopitalPatientsSqlServer().Delete(43256);
-            //Console.WriteLine("-----------------------------------------------------------------");
-
+            //new HopitalPatientsSqlServer().Create(new Patients(013256,"FRANCE","Marie", 36, 0608054070, "50 rue du Pont 44115 Basse-Goulaine"));
+            //new HopitalPatientsSqlServer().Create(new Patients(083257, "DUFOUR", "Jeanne", 31, 0608066070, "51 rue du Pont 44115 Basse-Goulaine"));
             //foreach (Patients pat in new HopitalPatientsSqlServer().FindAll())
             //{
-            //    Console.WriteLine(pat.ToString());
+            //    Console.WriteLine(pat);
             //}
-            Authentification prop = new HopitalAuthSqlServer().Login("a1", "a1");
-            Console.WriteLine(prop);
+
+            Secretariat salleAttente = Secretariat.Instance;
+
+            Medecin med1 = new Medecin("Dr. Hugotte", salleAttente);
+            Medecin med2 = new Medecin("Dr. Martin", salleAttente);
+
+            salleAttente.AddPatient(new Patients(222211, "MARTIN", "David", 38, 0458962300, "Paris"));
+            salleAttente.AddPatient(new Patients(222212, "BERTRAND", "George", 23, 0458962300, "Paris"));
+            salleAttente.AddPatient(new Patients(222213, "LEPETIT", "Stephanie", 27, 0458962300, "Paris"));
+
+            // Simulate doctors becoming available and seeing patients
+            med1.Update();
+            med2.Update();
+            med1.Update();
+            med2.Update();
+
+            med1.Dispose();
+            med2.Dispose();
         }
     }
 }
