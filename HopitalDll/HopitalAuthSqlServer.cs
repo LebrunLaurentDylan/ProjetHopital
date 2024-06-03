@@ -39,7 +39,7 @@ namespace HopitalDll
             }
 
             if (auth.Login != "" && auth.Login != null)
-                { return auth; }
+                { return auth;}
             else
                 { return null;}
                 
