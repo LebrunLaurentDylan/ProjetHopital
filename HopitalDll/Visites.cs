@@ -61,7 +61,7 @@ namespace HopitalData
         // methodes 
         public override string ToString()
         {
-            return $"N° Visite: {numVisite}, Id Patient:{idPatient}, Nom Medecin:{nomMedecin}\nDate Visite:{dateVisite}, N° Salle:{numSalle}, Cout:{COUTVISITE} eur";
+            return $"N° Visite: {numVisite}, Id Patient:{idPatient}, Nom Medecin:{nomMedecin}\nDate Visite:{dateVisite}, N° Salle:{numSalle}, Cout:{coutVisite} eur";
         }
     }
 }
