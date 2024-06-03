@@ -60,7 +60,7 @@ namespace HopitalDll
 
                 connection.Open();
                 command.ExecuteNonQuery();
-                Console.WriteLine("article supprimé");
+                Console.WriteLine("Patient supprimé");
 
                 using (SqlDataReader reader = command2.ExecuteReader())
                 {

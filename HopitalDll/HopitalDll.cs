@@ -25,6 +25,7 @@ namespace HopitalDll
     {
 
     }
+
     interface IhopitalAuth : IHopital<Authentification, int>
     {
 
