@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using System.IO;
 using System.Data.SqlClient;
 using HopitalData;
 
@@ -11,9 +12,17 @@ namespace HopitalDll
 {
     public class HopitalPatientsSqlServer : IhopitalPatients
     {
+        private string DossierActuel()
+        {
+            var enviroment = System.Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(enviroment).Parent.Parent.FullName;
+            Console.WriteLine(projectDirectory);
+            return projectDirectory;
+        }
+        
         public void Create(Patients obj)
         {
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Hopital.mdf;Integrated Security=True";
+            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DossierActuel()}\HopitalDll\Hopital.mdf;Integrated Security=True";
             string sql = "INSERT INTO patients(Id, nom, prenom, age, telephone, adresse) VALUES(@Id, @nom, @prenom, @age, @telephone, @adresse)";
             string sqlRead = "SELECT * FROM patients";
 
@@ -47,7 +56,7 @@ namespace HopitalDll
 
         public void Delete(int id)
         {
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Hopital.mdf;Integrated Security=True";
+            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DossierActuel()}\HopitalDll\Hopital.mdf;Integrated Security=True";
             string sql = "DELETE FROM patients WHERE Id=@id";
             string sqlRead = "SELECT * FROM patients";
 
@@ -76,7 +85,7 @@ namespace HopitalDll
         public List<Patients> FindAll()
         {
             List<Patients> liste = new List<Patients>();
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Hopital.mdf;Integrated Security=True";
+            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DossierActuel()}\HopitalDll\Hopital.mdf;Integrated Security=True";
             string sqlRead = "SELECT * FROM patients";
             SqlConnection connection = new SqlConnection(connectionString);
             SqlCommand command = new SqlCommand(sqlRead, connection);
@@ -95,7 +104,7 @@ namespace HopitalDll
         public Patients FindById(int id)
         {
             Patients a = null;
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Hopital.mdf;Integrated Security=True";
+            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DossierActuel()}\HopitalDll\Hopital.mdf;Integrated Security=True";
             string sql = "SELECT * FROM patients WHERE Id=@Id";
             SqlConnection connection = new SqlConnection(connectionString);
             SqlCommand command = new SqlCommand(sql, connection);
@@ -113,7 +122,7 @@ namespace HopitalDll
 
         public void Update(Patients obj)
         {
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Hopital.mdf;Integrated Security=True";
+            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DossierActuel()}\HopitalDll\Hopital.mdf;Integrated Security=True";
             string sql = "UPDATE patients SET nom=@nom, prenom=@prenom, age=@age, telephone=@telephone, adresse=@adresse WHERE Id=@Id";
             string sqlRead = "SELECT * FROM patients";
 
