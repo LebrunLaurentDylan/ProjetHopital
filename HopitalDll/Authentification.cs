@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HopitalData
 {
-    class Authentification
+    public class Authentification
     {
         // attributs 
         private string login;

@@ -21,17 +21,16 @@ namespace HopitalDll
 {
     public class HopitalVisitesSqlServer : IHopitalVisites
     {
-        private string DossierActuel()
+        private string ConnectionString()
         {
             var enviroment = System.Environment.CurrentDirectory;
             string projectDirectory = Directory.GetParent(enviroment).Parent.Parent.FullName;
-            Console.WriteLine(projectDirectory);
-            return projectDirectory;
+            return $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={projectDirectory}\HopitalDll\Hopital.mdf;Integrated Security=True";
         }
 
         public void Create(Visites obj)
         {
-            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DossierActuel()}\HopitalDll\Hopital.mdf;Integrated Security=True";
+            string connectionString = ConnectionString();
             string sql = "INSERT INTO visites(id_patient, nom_medecin, date_visite, cout_visite, num_salle) VALUES( @id_patient, @nom_medecin, @date_visite, @cout_visite, @num_salle)";
             string sqlRead = "SELECT * FROM visites";
 
@@ -70,7 +69,7 @@ namespace HopitalDll
         public List<Visites> FindAll()
         {
             List<Visites> liste = new List<Visites>();
-            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DossierActuel()}\HopitalDll\Hopital.mdf;Integrated Security=True";
+            string connectionString = ConnectionString();
             string sqlRead = "SELECT * FROM visites";
             SqlConnection connection = new SqlConnection(connectionString);
             SqlCommand command = new SqlCommand(sqlRead, connection);
@@ -95,7 +94,7 @@ namespace HopitalDll
         {
             
             List<Visites> liste = new List<Visites>();
-            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={DossierActuel()}\HopitalDll\Hopital.mdf;Integrated Security=True";
+            string connectionString = ConnectionString();
             string sqlRead = "SELECT * FROM visites WHERE id_patient=@id";
             SqlConnection connection = new SqlConnection(connectionString);
             SqlCommand command = new SqlCommand(sqlRead, connection);
