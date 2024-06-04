@@ -111,6 +111,8 @@ namespace ProjetHopital
         {
             if (auth.Metier == "Dr")
             {
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
+                Console.ForegroundColor = ConsoleColor.Black;
                 Console.WriteLine("-------------Menu Médecin--------\n");
                 Console.WriteLine(" A : Rendre la salle disponible");
                 Console.WriteLine(" B : Sauvegarder les visites en base");
@@ -122,6 +124,8 @@ namespace ProjetHopital
             }
             else if (auth.Metier == "secretaire")
             {
+                Console.BackgroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.Black;
                 Console.WriteLine("-------------Menu Secrétaire--------\n");
                 Console.WriteLine(" C : Ajouter un patient à la file d’attente");
                 Console.WriteLine(" D : Afficher la file d’attente");
@@ -302,6 +306,7 @@ namespace ProjetHopital
         {
             Console.Write("rentrez une touche pour sortir...");
             Console.ReadKey();
+            Console.Clear();
             AfficherMenu(auth);
         }
     }
