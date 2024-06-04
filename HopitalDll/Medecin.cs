@@ -38,7 +38,7 @@ namespace HopitalDll
 
         public void Dispose()
         {
-            salleAttente.SortirPatient(this);
+            salleAttente.GetNextPatient();
         }
 
         public void EnvoiVisitesBDD()

@@ -25,6 +25,7 @@ namespace HopitalData
         public string Prenom { get => prenom; }
 
         // constructeur
+        public Patients() { }
         public Patients(int idPatient, string nom, string prenom, int age, int telephone, string adresse)
         {
             this.idPatient = idPatient;

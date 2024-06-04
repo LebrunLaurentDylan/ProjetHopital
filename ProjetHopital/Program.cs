@@ -40,7 +40,7 @@ namespace ProjetHopital
             if (Operations.Login() != null)
             {
                 Console.WriteLine(Operations.Login().ToString());
-                Operations.AficherMenu(Operations.Login());
+                Operations.AfficherMenu(Operations.Login());
             }
             else
             {

@@ -1,64 +1,87 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HopitalData;
 
 namespace HopitalDll
 {
-    public class Secretariat : IPatient
+    public class Secretariat
     {
         private static Secretariat instance = null;
         private static readonly object padlock = new object();
-        private static Queue<Patients> patientQueue = new Queue<Patients>();
-        private List<IObserver> observers = new List<IObserver>();
+        private Queue<Patients> patientQueue = new Queue<Patients>();
 
-        private Secretariat() { }
-
-        public static Secretariat Instance
+        // Constructeur privé pour empêcher l'instantiation externe
+        private Secretariat()
         {
-            get
-            { lock (padlock)
+            // Initialiser ici des patients par défaut si nécessaire
+        }
+
+        // Méthode pour obtenir l'instance unique du singleton
+        public static Secretariat Instance()
+        {
+            if (instance == null)
+            {
+                lock (padlock)
                 {
                     if (instance == null)
                     {
                         instance = new Secretariat();
-                    } return instance;
+                    }
                 }
             }
+            return instance;
         }
 
-        public void AddPatient(Patients patient)
+        // Méthode pour ajouter un patient à la file d'attente
+        public string AddPatient(Patients patient)
         {
-            patientQueue.Enqueue(patient);
-            NotifyPatient();
+            lock (padlock)
+            {
+                patientQueue.Enqueue(patient);
+                return NotifyPatient(patient);
+            }
         }
 
+        // Méthode pour obtenir le prochain patient de la file d'attente
         public Patients GetNextPatient()
         {
-            if (patientQueue.Count > 0)
+            lock (padlock) 
             {
-                return patientQueue.Dequeue();
+                if (patientQueue.Count > 0)
+                {
+                    return patientQueue.Dequeue();
+                }
+                return null;
             }
-            return null;
         }
 
-        public void EntrerPatient(IObserver observer)
+        // Méthode pour retourner le contenu de la file d'attente
+        public Patients[] GetAllPatients()
         {
-            observers.Add(observer);
+            lock (padlock)
+            {
+                return patientQueue.ToArray();
+            }
         }
 
-        public void SortirPatient(IObserver observer)
+        // Méthode pour récupérer un patient spécifique (exemple pour external method)
+        public Patients PeekNextPatient()
         {
-            observers.Remove(observer);
-        }
-        public void NotifyPatient()
-        {
-            foreach (var observer in observers)
+            lock (padlock)
             {
-                observer.Update();
+                if (patientQueue.Count > 0)
+                {
+                    return patientQueue.Peek();
+                }
+                return null;
             }
+        }
+
+        // Exemple de méthode de notification (si nécessaire)
+        private string NotifyPatient(Patients patient)
+        {
+            int position = patientQueue.Count; // Position du patient dans la file d'attente
+            return $"Patient {patient.Nom} added to the queue at position {position}.";
         }
     }
 }
