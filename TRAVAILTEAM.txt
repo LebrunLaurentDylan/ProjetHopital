@@ -1,0 +1,263 @@
+1
+public class Secretariat : IPatient {    private static Secretariat instance = null;    private static readonly object padlock = new object();    private Queue<Patient> patientQueue = new Queue<Patient>();    private List<IObserver> observers = new List<IObserver>();     private Secretariat() { }     public static Secretariat Instance    {        get        {            lock (padlock)            {                if (instance == null)                {                    instance = new Secretariat();                }                return instance;            }        }    }     public void AddPatient(Patient patient)    {        patientQueue.Enqueue(patient);        NotifyObservers();    }     public Patient GetNextPatient()    {        if (patientQueue.Count > 0)        {            return patientQueue.Dequeue();        }        throw new InvalidOperationException("No patients in queue");    }     public void RegisterObserver(IObserver observer)    {        observers.Add(observer);    }     public void UnregisterObserver(IObserver observer)    {        observers.Remove(observer);    }     private void NotifyObservers()    {        foreach (var observer in observers)        {            observer.Update();        }    } }  
+
+2
+public interface IPatient {    void AddPatient(Patient patient);    Patient GetNextPatient();    void RegisterObserver(IObserver observer);    void UnregisterObserver(IObserver observer); }  
+
+3
+public interface IObserver {    void Update(); }
+
+adil : 
+
+Opertations.cs : 
+public static class Operations
+    {
+
+        public static void OperationCaractere(string metier)
+        {
+            char op = Convert.ToChar(Console.ReadLine());
+            switch (op)
+            {
+                case 'A':
+                    RendreLaSalle();break;
+                case 'B':
+                    return ;
+                case 'C':
+                    AjouterPatient(); break;
+                case 'D':
+                    AfficherFileAttente();break;
+                case 'E':
+                    AfficherProchainPatient();break;
+                case 'F':
+                    AfficherProchainPatient(); break;
+                case 'Q':
+                    AficherMenu(metier);break;
+
+
+            }
+            
+        }
+        public static void AficherMenu(string metier)
+        {
+            Console.WriteLine("-------------Menu Principale --------\n");
+            if (metier == "Medecin")
+            {
+                Console.WriteLine("-------------Menu Médecin--------\n");
+                Console.WriteLine(" A : le médecin décide de rendre la salle dispo :\n");
+                Console.WriteLine(" B :le médecin  décide de sauvegarder en base les visites:\n");
+                Console.WriteLine(" F : Afficher la file d’attente:\n");
+
+                Console.WriteLine("Choisissez votre opérateur parmis les suivants: A , B ,F ");
+                
+
+            }
+            else
+            {
+                Console.WriteLine("-------------Menu secrétaire--------\n");
+                Console.WriteLine(" C : Rajouter a la file d’attente un patient :\n");
+                Console.WriteLine(" D : Afficher la file d’attente:\n");
+                Console.WriteLine(" E : Afficher le prochain patient de la file (sans le retirer):\n");
+                Console.WriteLine("Choisissez votre opérateur parmis les suivants: A , B ");
+                
+            }
+           
+           
+            Console.WriteLine("Q : Sortir de ce menu et revenir au menu principal:\n");
+
+            OperationCaractere(metier);
+
+
+
+
+
+
+        }
+        public static void RendreLaSalle()
+        { 
+            
+        }
+            public static void AfficherProchainPatient()
+        {
+            Secretariat.Instance.GetNextPatient();
+        }
+        public static void AfficherFileAttente()
+        {
+            Secretariat.Instance.NotifyPatient() ;
+        }
+
+        public static Patients RecupererPatient()
+        {
+            Console.WriteLine("-------------récupérer  un patient de la base--------\n");
+            Console.WriteLine("-------------Saisissez : \n");
+            Console.Write("id patient: ");
+            int id_Patient = Int32.Parse((Console.ReadLine()));
+            Patients p = new HopitalPatientsSqlServer().FindById(id_Patient);
+            Secretariat.Instance.AddPatient(p);
+            return p;
+        }
+
+        public static void AjouterPatient()
+
+        {
+            if (RecupererPatient() == null){
+                Console.WriteLine("-------------Inscrire un patient en base --------\n");
+                Console.WriteLine("-------------Saisissez : \n");
+                Console.Write("id patient: ");
+                int id_Patient = Int32.Parse((Console.ReadLine()));
+                Console.Write("Nom: ");
+                string nom = (Console.ReadLine());
+                Console.Write("Prenom: ");
+                string prenom = (Console.ReadLine());
+                Console.Write("Age: ");
+                int age = Int32.Parse((Console.ReadLine()));
+                Console.Write("Téléphone: ");
+                int telephone = Int32.Parse((Console.ReadLine()));
+                Console.Write("Adresse: ");
+                string adresse = (Console.ReadLine());
+                Patients p = new Patients(id_Patient, nom, prenom, age, telephone, adresse);
+                new HopitalPatientsSqlServer().Create(p);
+                Secretariat.Instance.AddPatient(p);
+            }else
+            {
+                RecupererPatient();
+            }
+           
+        }
+
+        public static Authentification Login()
+        {
+
+            Console.WriteLine("-------------Authentification--------\n");
+            Console.Write("Login: ");
+            string login = (Console.ReadLine());
+            Console.Write("Password: ");
+            string passWord = (Console.ReadLine());
+            Authentification aut = new Authentification(login, passWord);
+            if (new HopitalAuthSqlServer().Login(aut) != null)
+            {
+                Thread.Sleep(300);
+                AficherMenu(aut.Metier);
+                return new HopitalAuthSqlServer().Login(aut);
+                
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+    }
+}
+
+program.cs : 
+class Program
+    {
+        static void Main(string[] args)
+        {
+
+            if(Operations.Login()!= null)
+            {
+                Console.WriteLine(Operations.Login().ToString()) ;
+                Operations.AficherMenu(Operations.Login().Metier);
+            }
+            else
+            {
+                Console.WriteLine(" Error Authentification");
+                
+            }
+	}
+   }
+
+****************************************************************
+
+dYLAN: 
+using HopitalDll;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Formatters.Soap;
+using System.IO;
+
+namespace HopitalData
+{
+    public class Authentification: IObserver
+    {
+        // attributs
+        private string login;
+        private string password;
+        private string nom;
+        private string metier;
+        private Secretariat salleAttente;
+        public List<Visites> listeVisites;
+
+        // properties
+        public string Metier { get => metier; }
+        public string Nom { get => nom; }
+        public string Password { get => password; }
+        public string Login { get => login; }
+        // constructeur
+        public Authentification() { }
+        public Authentification(string login, string password, string nom, string metier)
+        {
+            this.login = login;
+            this.password = password;
+            this.nom = nom;
+            this.metier = metier;
+        }
+        // methodes
+        public override string ToString()
+        {
+            return $"You're Logged as : {metier}-{nom}\n";
+        }
+
+        public void Update()
+        {
+            var patient = salleAttente.GetNextPatient();
+            if (patient != null)
+            {
+                Console.WriteLine($"{nom} is seeing patient {patient.Nom}");
+                SaveVisite(patient); // Dylan : Sauvegarder la visite quand un patient est vu
+            }
+        }
+
+        public void Dispose()
+        {
+            salleAttente.SortirPatient(this);
+        }
+
+        public void SaveVisite(Patients patient) // Dylan : methode d'ajout de patients à la liste
+        {
+            Visites visite;
+            visite = new Visites(patient.IdPatient, this.nom, Convert.ToString(DateTime.Now), 23, 2);
+            listeVisites.Add(visite);
+        }
+
+        public static void SaveVisitesXml(Visites[] liste)
+        {
+            FileStream outStream = new FileStream($@"{FilePath()}\listeVisites.xml", FileMode.OpenOrCreate, FileAccess.Write);
+            SoapFormatter binWriter = new SoapFormatter();
+            binWriter.Serialize(outStream, liste);
+            outStream.Close();
+        }
+
+        public static Visites[] LoadVisitesXml()
+        {
+            FileStream inStream = new FileStream($@"{FilePath()}\listeVisites.xml", FileMode.Open, FileAccess.Read);
+            SoapFormatter binReader = new SoapFormatter();
+            // Désérialiser directement en tableau de Patients
+            Visites[] VisitesArray = (Visites[])binReader.Deserialize(inStream);
+            inStream.Close();
+            return VisitesArray;
+        }
+
+        private static string FilePath()
+        {
+            var enviroment = System.Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(enviroment).Parent.Parent.FullName;
+            return projectDirectory;
+        }
+    }
+}

@@ -19,23 +19,34 @@ namespace ProjetHopital
             //    Console.WriteLine(pat);
             //}
 
-            Secretariat salleAttente = Secretariat.Instance;
+            //Secretariat salleAttente = Secretariat.Instance;
 
-            Medecin med1 = new Medecin("Dr. Hugotte", salleAttente);
-            Medecin med2 = new Medecin("Dr. Martin", salleAttente);
+            //Medecin med1 = new Medecin("Dr. Hugotte", salleAttente);
+            //Medecin med2 = new Medecin("Dr. Martin", salleAttente);
 
-            salleAttente.AddPatient(new Patients(222211, "MARTIN", "David", 38, 0458962300, "Paris"));
-            salleAttente.AddPatient(new Patients(222212, "BERTRAND", "George", 23, 0458962300, "Paris"));
-            salleAttente.AddPatient(new Patients(222213, "LEPETIT", "Stephanie", 27, 0458962300, "Paris"));
+            //salleAttente.AddPatient(new Patients(222211, "MARTIN", "David", 38, 0458962300, "Paris"));
+            //salleAttente.AddPatient(new Patients(222212, "BERTRAND", "George", 23, 0458962300, "Paris"));
+            //salleAttente.AddPatient(new Patients(222213, "LEPETIT", "Stephanie", 27, 0458962300, "Paris"));
 
-            // Simulate doctors becoming available and seeing patients
-            med1.Update();
-            med2.Update();
-            med1.Update();
-            med2.Update();
+            //// Simulate doctors becoming available and seeing patients
+            //med1.Update();
+            //med2.Update();
+            //med1.Update();
+            //med2.Update();
 
-            med1.Dispose();
-            med2.Dispose();
+            //med1.Dispose();
+            //med2.Dispose();
+
+            if (Operations.Login() != null)
+            {
+                Console.WriteLine(Operations.Login().ToString());
+                Operations.AficherMenu(Operations.Login().Metier);
+            }
+            else
+            {
+                Console.WriteLine(" Error Authentification");
+
+            }
         }
     }
 }
