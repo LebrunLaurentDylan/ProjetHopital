@@ -28,12 +28,12 @@ namespace HopitalData
         private int numVisite;
 
         // properties 
-        public int IdPatient  { get => idPatient; }
+        public int IdPatient  { get => idPatient; set => idPatient = value; }
         public int NumVisite { set =>numVisite= value; }
-        public int NumSalle { get => numSalle; }
-        public string NomMedecin { get => nomMedecin; }
-        public string DateVisite { get => dateVisite; }
-        public int CoutVisite { get => coutVisite; }
+        public int NumSalle { get => numSalle; set => numSalle = value; }
+        public string NomMedecin { get => nomMedecin; set => nomMedecin = value; }
+        public string DateVisite { get => dateVisite; set => dateVisite = value; }
+        public int CoutVisite { get => coutVisite; set => coutVisite = value; }
 
         // constructeur
         public Visites()

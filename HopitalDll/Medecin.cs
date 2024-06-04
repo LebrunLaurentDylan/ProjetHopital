@@ -7,13 +7,21 @@ using HopitalData;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Formatters.Soap;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace HopitalDll
 {
     public class Medecin : Authentification
     {
         // attributs 
-        public const int COUTVISITE = 23;
+        private const int cOUTVISITE = 23;
+
+        public static int COUTVISITE => cOUTVISITE;
+        public List<Visites> listeVisites = new List<Visites>();
+
+        public List<Visites> ListeVisites
+        { get => listeVisites; set => listeVisites = value; }
+
         // constructeur medecin (peut-être pas utile)
         public Medecin(){}
         public Medecin(string login, string password, string nom, string metier, int salle)
@@ -28,23 +36,23 @@ namespace HopitalDll
         // methodes du medecin
         public override void Update()
         {
-            var patient = salleAttente.GetNextPatient();
+            Patients patient = Secretariat.Instance().GetNextPatient();
             if (patient != null)
             {
-                Console.WriteLine($"{nom} is seeing patient {patient.Nom}");
+                Console.WriteLine($"{Metier}.{Nom} is seeing patient {patient.Nom}");
                 SaveVisite(patient); // Dylan : Sauvegarder la visite quand un patient est vu
             }
         }
 
         public void Dispose()
         {
-            salleAttente.GetNextPatient();
+            Secretariat.Instance().GetNextPatient();
         }
 
         public void EnvoiVisitesBDD()
         {
-            listeVisites = LoadVisitesXml();
-            foreach(Visites vis in listeVisites)
+            ListeVisites = LoadVisitesXml();
+            foreach(Visites vis in ListeVisites)
             {
                 new HopitalVisitesSqlServer().Create(vis);
             }
@@ -53,27 +61,32 @@ namespace HopitalDll
 
         public void SaveVisite(Patients patient) // Dylan : methode d'ajout de patients à la liste
         {
-            Visites visite;
-            visite = new Visites(patient.IdPatient, this.nom, Convert.ToString(DateTime.Now), COUTVISITE, this.salle);
-            listeVisites.Add(visite);
+            DateTime date = DateTime.Now;
+            Visites visite= new Visites(patient.IdPatient, Nom, Convert.ToString(date), COUTVISITE, Salle);
+            Console.WriteLine(visite.ToString());
+            ListeVisites.Add(visite);
         }
 
-        public static void SaveVisitesXml(Visites[] liste)
+        public void SaveVisitesXml()
         {
-            FileStream outStream = new FileStream($@"{FilePath()}\listeVisites.xml", FileMode.OpenOrCreate, FileAccess.Write);
-            SoapFormatter binWriter = new SoapFormatter();
-            binWriter.Serialize(outStream, liste);
-            outStream.Close();
+            string filePath = $@"{FilePath()}\listeVisites.xml";
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Visites>));
+
+            using (FileStream outStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                xmlSerializer.Serialize(outStream, listeVisites);
+            }
         }
 
-        public static List<Visites> LoadVisitesXml()
+        public List<Visites> LoadVisitesXml()
         {
-            FileStream inStream = new FileStream($@"{FilePath()}\listeVisites.xml", FileMode.Open, FileAccess.Read);
-            SoapFormatter binReader = new SoapFormatter();
-            // Désérialiser directement en tableau de Patients
-            List<Visites> VisitesArray = (List<Visites>)binReader.Deserialize(inStream);
-            inStream.Close();
-            return VisitesArray;
+            string filePath = $@"{FilePath()}\listeVisites.xml";
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Visites>));
+
+            using (FileStream inStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                return (List<Visites>)xmlSerializer.Deserialize(inStream);
+            }
         }
 
         private static string FilePath()

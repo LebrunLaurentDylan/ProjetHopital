@@ -102,7 +102,7 @@ namespace HopitalDll
 
         public Patients FindById(int id)
         {
-            Patients a = null;
+            Patients a = new Patients();
             string connectionString = ConnectionString();
             string sql = "SELECT * FROM patients WHERE Id=@Id";
             SqlConnection connection = new SqlConnection(connectionString);

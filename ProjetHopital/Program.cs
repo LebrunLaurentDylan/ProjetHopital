@@ -40,13 +40,35 @@ namespace ProjetHopital
             if (Operations.Login() != null)
             {
                 Console.WriteLine(Operations.Login().ToString());
-                Operations.AfficherMenu(Operations.Login());
+                
             }
             else
             {
                 Console.WriteLine(" Error Authentification");
 
             }
+
+            //Authentification auth = new HopitalAuthSqlServer().Login("bb", "bb");
+            //Medecin ops = new Medecin(auth.Login, auth.Password, auth.Nom, auth.Metier, auth.Salle);
+            //Console.WriteLine(ops.ToString());
+            //// Ajouter des visites pour test
+            //Patients pat = new HopitalPatientsSqlServer().FindById(2525);
+            //ops.ListeVisites.Add(new Visites(pat.IdPatient, ops.Nom, Convert.ToString(DateTime.Now),23,ops.Salle));
+            //ops.ListeVisites.Add(new Visites(pat.IdPatient, ops.Nom, Convert.ToString(DateTime.Now), 23, ops.Salle));
+
+            //// Sauvegarder la liste des visites
+            //ops.SaveVisitesXml();
+
+            //// Charger la liste des visites
+            //List<Visites> loadedVisites = ops.LoadVisitesXml();
+
+            //// Afficher les visites chargées
+            //foreach (var visite in loadedVisites)
+            //{
+            //    Console.WriteLine($"ID: {visite.IdPatient}, Nom: {visite.NomMedecin}, Date: {visite.DateVisite}, Cout: {visite.CoutVisite}, Salle: {visite.NumSalle}");
+            //}
+
+
         }
     }
 }

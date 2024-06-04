@@ -19,7 +19,7 @@ namespace HopitalData
         protected string metier;
         protected int salle;
         protected Secretariat salleAttente;
-        public List<Visites> listeVisites;
+        
 
         // properties
         public string Metier { get => metier; }
@@ -42,7 +42,7 @@ namespace HopitalData
         // methodes
         public override string ToString()
         {
-            return $"You're Logged as : {metier}-{nom}\n";
+            return $"You're Logged as : {metier}-{nom}\nSalle: {salle}";
         }
 
         public virtual void Update()

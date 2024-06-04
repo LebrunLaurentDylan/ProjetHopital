@@ -104,7 +104,7 @@ namespace HopitalDll
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                Visites vis = new Visites(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5));
+                Visites vis = new Visites(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), Convert.ToString(reader.GetDateTime(3)), reader.GetInt32(4), reader.GetInt32(5));
                 liste.Add(vis);
             }
 
