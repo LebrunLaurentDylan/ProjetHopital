@@ -10,25 +10,28 @@ using System.IO;
 
 namespace HopitalDll
 {
-    public class Medecin : IObserver
+    public class Medecin : Authentification
     {
-        private string name;
-        private Secretariat salleAttente;
-        public List<Visites> listeVisites;
-
-        public Medecin(string name, Secretariat waitingRoom)
+        // attributs 
+        public const int COUTVISITE = 23;
+        // constructeur medecin (peut-être pas utile)
+        public Medecin(){}
+        public Medecin(string login, string password, string nom, string metier, int salle)
         {
-            this.name = name;
-            this.salleAttente = waitingRoom;
-            this.salleAttente.EntrerPatient(this);
+            this.login = login;
+            this.password = password;
+            this.nom = nom;
+            this.metier = metier;
+            this.salle = salle;
         }
 
-        public void Update()
+        // methodes du medecin
+        public override void Update()
         {
             var patient = salleAttente.GetNextPatient();
             if (patient != null)
             {
-                Console.WriteLine($"{name} is seeing patient {patient.Nom}");
+                Console.WriteLine($"{nom} is seeing patient {patient.Nom}");
                 SaveVisite(patient); // Dylan : Sauvegarder la visite quand un patient est vu
             }
         }
@@ -38,10 +41,20 @@ namespace HopitalDll
             salleAttente.SortirPatient(this);
         }
 
+        public void EnvoiVisitesBDD()
+        {
+            listeVisites = LoadVisitesXml();
+            foreach(Visites vis in listeVisites)
+            {
+                new HopitalVisitesSqlServer().Create(vis);
+            }
+            File.Delete($@"{FilePath()}\listeVisites.xml");
+        }
+
         public void SaveVisite(Patients patient) // Dylan : methode d'ajout de patients à la liste
         {
             Visites visite;
-            visite = new Visites(patient.IdPatient, this.name, Convert.ToString(DateTime.Now),23,2);
+            visite = new Visites(patient.IdPatient, this.nom, Convert.ToString(DateTime.Now), COUTVISITE, this.salle);
             listeVisites.Add(visite);
         }
 
@@ -53,12 +66,12 @@ namespace HopitalDll
             outStream.Close();
         }
 
-        public static Visites[] LoadVisitesXml()
+        public static List<Visites> LoadVisitesXml()
         {
             FileStream inStream = new FileStream($@"{FilePath()}\listeVisites.xml", FileMode.Open, FileAccess.Read);
             SoapFormatter binReader = new SoapFormatter();
             // Désérialiser directement en tableau de Patients
-            Visites[] VisitesArray = (Visites[])binReader.Deserialize(inStream);
+            List<Visites> VisitesArray = (List<Visites>)binReader.Deserialize(inStream);
             inStream.Close();
             return VisitesArray;
         }
@@ -69,7 +82,6 @@ namespace HopitalDll
             string projectDirectory = Directory.GetParent(enviroment).Parent.Parent.FullName;
             return projectDirectory;
         }
-
     }
 }
 

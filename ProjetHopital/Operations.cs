@@ -12,7 +12,7 @@ namespace ProjetHopital
     public static class Operations
     {
 
-        public static void OperationCaractere(string metier)
+        public static void OperationCaractere(Authentification auth)
         {
             char op = Convert.ToChar(Console.ReadLine().ToUpper());
             switch (op)
@@ -29,22 +29,26 @@ namespace ProjetHopital
                     AfficherProchainPatient(); break;
                 case 'F':
                     AfficherProchainPatient(); break;
+                case 'G':
+                    Medecin med = new Medecin(auth.Login, auth.Password, auth.Nom, auth.Metier, auth.Salle);
+                    med.Update(); break;
                 case 'Q':
-                    AficherMenu(metier); break;
+                    AficherMenu(auth); break;
 
 
             }
 
         }
-        public static void AficherMenu(string metier)
+        public static void AficherMenu(Authentification auth)
         {
             Console.WriteLine("-------------Menu Principale --------\n");
-            if (metier == "Dr")
+            if (auth.Metier == "Dr")
             {
                 Console.WriteLine("-------------Menu Médecin--------\n");
                 Console.WriteLine(" A : le médecin décide de rendre la salle dispo :\n");
                 Console.WriteLine(" B :le médecin  décide de sauvegarder en base les visites:\n");
                 Console.WriteLine(" F : Afficher la file d’attente:\n");
+                Console.WriteLine(" G : le medecin traite un patient:\n");
 
                 Console.WriteLine("Choisissez votre opérateur parmis les suivants: A , B ,F ");
 
@@ -63,7 +67,7 @@ namespace ProjetHopital
 
             Console.WriteLine("Q : Sortir de ce menu et revenir au menu principal:\n");
 
-            OperationCaractere(metier);
+            OperationCaractere(auth);
 
 
 
@@ -137,7 +141,7 @@ namespace ProjetHopital
             if (auth != null)
             {
                 Thread.Sleep(300);
-                AficherMenu(auth.Metier);
+                AficherMenu(auth);
                 return auth;
 
             }

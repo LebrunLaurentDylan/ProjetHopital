@@ -58,6 +58,16 @@ namespace HopitalData
             this.numSalle = numSalle;
         }
 
+        public Visites(int numVisite, int idPatient, string nomMedecin, string dateVisite, int coutVisite, int numSalle)
+        {
+            this.numVisite = numVisite;
+            this.idPatient = idPatient;
+            this.nomMedecin = nomMedecin;
+            this.dateVisite = dateVisite;
+            this.coutVisite = coutVisite;
+            this.numSalle = numSalle;
+        }
+
         // methodes 
         public override string ToString()
         {

@@ -34,8 +34,7 @@ namespace HopitalDll
             while (reader.Read())
             {
                 //Console.WriteLine($"Login: {reader["login"]}, password: {reader["password"]}, Nom: {reader["nom"]}, metier:{reader["metier"]}");
-                auth = new Authentification(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
-                return auth;
+                auth = new Authentification(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4));
             }
 
             if (auth.Login != "" && auth.Login != null)

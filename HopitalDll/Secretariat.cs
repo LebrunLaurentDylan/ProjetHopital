@@ -11,7 +11,7 @@ namespace HopitalDll
     {
         private static Secretariat instance = null;
         private static readonly object padlock = new object();
-        private Queue<Patients> patientQueue = new Queue<Patients>();
+        private static Queue<Patients> patientQueue = new Queue<Patients>();
         private List<IObserver> observers = new List<IObserver>();
 
         private Secretariat() { }
