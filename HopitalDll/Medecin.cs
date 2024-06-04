@@ -83,5 +83,59 @@ namespace HopitalDll
             return projectDirectory;
         }
     }
+
+    // medecin2 Mamadou
+    public class Medecin2 
+    {
+        private int id;
+        private string nom;
+        private Queue<Patients> assignedPatient = new Queue<Patients>();
+        public int Id { get; private set; }
+        public string Nom { get; private set; }
+        private Patients actuelPatient;
+
+
+        public Medecin2(int id, string nom)
+        {
+            this.id = id;
+            this.nom = nom;
+        }
+
+
+        public void AssignerPatient(Patients patient)
+        {
+            assignedPatient.Enqueue(patient);
+            if (actuelPatient == null)
+            {
+                GetNextPatient();
+            }
+        }
+
+        public void LibererActuelPatient()
+        {
+            actuelPatient = null;
+            GetNextPatient();
+        }
+
+        public Patients GetNextPatient()
+        {
+            if (assignedPatient.Count > 0)
+            {
+                actuelPatient = assignedPatient.Dequeue();
+                // Notifier soit le medecin soit le system du statut de la file
+                Console.WriteLine($"Docteur {Nom} reçoit le patient {actuelPatient}");
+                return actuelPatient;
+            }
+            return actuelPatient;
+        }
+        public void Update()
+        {
+            // Verifier si un patient est en consultation, sinon appeler le prochain
+            if (actuelPatient == null && assignedPatient.Count > 0)
+            {
+                GetNextPatient();
+            }
+        }
+    }
 }
 

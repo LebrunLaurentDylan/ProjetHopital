@@ -49,6 +49,7 @@ namespace HopitalDll
             {
                 if (patientQueue.Count > 0)
                 {
+                    
                     return patientQueue.Dequeue();
                 }
                 return null;

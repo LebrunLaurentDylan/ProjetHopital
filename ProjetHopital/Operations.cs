@@ -54,7 +54,7 @@ namespace ProjetHopital
                 Console.WriteLine(" B : Sauvegarder les visites en base :\n");
                 Console.WriteLine(" F : Afficher la file d’attente :\n");
                 Console.WriteLine(" G : Traiter un patient :\n");
-                Console.WriteLine(" Z : Deconnection.");
+                Console.WriteLine(" Q : Deconnection.");
                 Console.WriteLine("Choisissez votre opérateur parmi les suivants : A, B, F, G, Z");
             }
             else
@@ -63,7 +63,7 @@ namespace ProjetHopital
                 Console.WriteLine(" C : Ajouter un patient à la file d’attente :\n");
                 Console.WriteLine(" D : Afficher la file d’attente :\n");
                 Console.WriteLine(" E : Afficher le prochain patient de la file (sans le retirer) :\n");
-                Console.WriteLine(" Z : Deconnection.");
+                Console.WriteLine(" Q : Deconnection.");
                 Console.WriteLine("Choisissez votre opérateur parmi les suivants : C, D, E, Z");
             }
 
