@@ -48,9 +48,9 @@ namespace HopitalData
             this.dateVisite = dateVisite;
         }
 
-        public Visites(int numVisite, int idPatient, string nomMedecin, string dateVisite, int coutVisite, int numSalle)
+        public Visites(int idPatient, string nomMedecin, string dateVisite, int coutVisite, int numSalle)
         {
-            this.numVisite = numVisite;
+            //this.numVisite = numVisite;
             this.idPatient = idPatient;
             this.nomMedecin = nomMedecin;
             this.dateVisite = dateVisite;
