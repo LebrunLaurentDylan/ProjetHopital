@@ -162,7 +162,6 @@ namespace ProjetHopital
         public static void SauverDansBDD(Authentification auth)
         {
             Medecin med = new Medecin(auth.Login, auth.Password, auth.Nom, auth.Metier, auth.Salle);
-            med.SaveVisitesXml();
             med.EnvoiVisitesBDD();
             Exit(auth);
         }

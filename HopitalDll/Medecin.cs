@@ -41,6 +41,7 @@ namespace HopitalDll
             {
                 Console.WriteLine($"{Metier}.{Nom} is seeing patient {patient.Nom}");
                 SaveVisite(patient); // Dylan : Sauvegarder la visite quand un patient est vu
+                SaveVisitesXml();
             }
         }
 
