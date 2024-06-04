@@ -14,7 +14,7 @@ namespace ProjetHopital
 
         public static void OperationCaractere(string metier)
         {
-            char op = Convert.ToChar(Console.ReadLine());
+            char op = Convert.ToChar(Console.ReadLine().ToUpper());
             switch (op)
             {
                 case 'A':
@@ -39,7 +39,7 @@ namespace ProjetHopital
         public static void AficherMenu(string metier)
         {
             Console.WriteLine("-------------Menu Principale --------\n");
-            if (metier == "Medecin")
+            if (metier == "Dr")
             {
                 Console.WriteLine("-------------Menu Médecin--------\n");
                 Console.WriteLine(" A : le médecin décide de rendre la salle dispo :\n");
@@ -56,7 +56,7 @@ namespace ProjetHopital
                 Console.WriteLine(" C : Rajouter a la file d’attente un patient :\n");
                 Console.WriteLine(" D : Afficher la file d’attente:\n");
                 Console.WriteLine(" E : Afficher le prochain patient de la file (sans le retirer):\n");
-                Console.WriteLine("Choisissez votre opérateur parmis les suivants: A , B ");
+                Console.WriteLine("Choisissez votre opérateur parmis les suivants: C, D, E \n--------- ");
 
             }
 
