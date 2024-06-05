@@ -17,10 +17,9 @@ namespace ProjetHopital
                 case 'A':
                     if (auth.Metier == "Dr")
                     {
-                        RendreLaSalle();
+                        RendreLaSalle(auth);
                         Exit(auth);
                     }
-
                     else
                     {
                         Console.WriteLine("Option Indisponible");
@@ -144,11 +143,16 @@ namespace ProjetHopital
             OperationCaractere(auth);
         }
 
-        public static void RendreLaSalle()
+        /*
+        * Fonctions internes à OperationCaractere et afficher Menu
+        */
+
+        public static void RendreLaSalle(Authentification auth)
         {
-            // Implémentation à ajouter
-            Console.WriteLine("La salle a été rendue disponible.");
+            if (TraiterPatient(auth) == true)
+                Console.WriteLine("La salle a été rendue disponible.");
         }
+
         public static void AfficherListeVisiteIdPatient(Authentification auth)
         {
             Console.Write("ID patient : ");
@@ -300,11 +304,12 @@ namespace ProjetHopital
             }
         }
 
-        public static void TraiterPatient(Authentification auth)
+        public static bool TraiterPatient(Authentification auth)
         {
             Medecin med = new Medecin(auth.Login, auth.Password, auth.Nom, auth.Metier, auth.Salle);
             med.Update();
             Exit(auth);
+            return true;
         }
 
         public static Authentification Login()
