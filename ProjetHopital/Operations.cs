@@ -16,7 +16,11 @@ namespace ProjetHopital
                 // case medecin
                 case 'A':
                     if (auth.Metier == "Dr")
+                    {
                         RendreLaSalle();
+                        Exit(auth);
+                    }
+
                     else
                     {
                         Console.WriteLine("Option Indisponible");
@@ -25,7 +29,9 @@ namespace ProjetHopital
                     break;
                 case 'B':
                     if (auth.Metier == "Dr")
-                        SauverDansBDD(auth);
+                        try { SauverDansBDD(auth); }
+                        catch { Console.WriteLine("Pas de liste existante");Exit(auth);}
+                        
                     else
                     {
                         Console.WriteLine("Option Indisponible");
@@ -207,6 +213,7 @@ namespace ProjetHopital
         {
             Medecin med = new Medecin(auth.Login, auth.Password, auth.Nom, auth.Metier, auth.Salle);
             Console.WriteLine("------------- ListeVisites.xml --------\n");
+            try { med.LoadVisitesXml(); } catch { Console.WriteLine("Aucun visites dans le fichier");Exit(auth); }
             foreach (Visites visite in med.LoadVisitesXml())
             { 
                 Console.WriteLine(visite.ToString());
@@ -248,9 +255,30 @@ namespace ProjetHopital
                     Console.Write("Prénom : ");
                     string prenom = Console.ReadLine();
                     Console.Write("Âge : ");
-                    int age = int.Parse(Console.ReadLine());
+                    int age = 0;
+                    do {
+                        try { age = int.Parse(Console.ReadLine()); }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine($"Votre nombre n'est pas valide :{e.Message} ");
+                            Console.Write("Âge : ");
+                            age = int.Parse(Console.ReadLine());
+                        }
+                    }
+                    while (age > Math.Pow(2, 31));
                     Console.Write("Téléphone : ");
-                    int telephone = int.Parse(Console.ReadLine());
+                    int telephone = 0;
+                    do
+                    {
+                        try { telephone = int.Parse(Console.ReadLine()); }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine($"Votre nombre n'est pas valide :{e.Message} ");
+                            Console.Write("Âge : ");
+                            telephone = int.Parse(Console.ReadLine());
+                        }
+                    }
+                    while (telephone > Math.Pow(2, 31));
                     Console.Write("Adresse : ");
                     string adresse = Console.ReadLine();
 
@@ -307,6 +335,22 @@ namespace ProjetHopital
             Console.ReadKey();
             Console.Clear();
             AfficherMenu(auth);
+        }
+
+        public static int ExeptionInt(int num)
+        {
+            do
+            {
+                try { num = int.Parse(Console.ReadLine()); }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Votre nombre n'est pas valide :{e.Message} ");
+                    Console.Write("Rentrez une autre valeur : ");
+                    num = int.Parse(Console.ReadLine());
+                }
+            }
+            while (num > Math.Pow(2, 31));
+            return num;
         }
     }
 }
