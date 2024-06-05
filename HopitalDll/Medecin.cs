@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HopitalData;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization.Formatters.Soap;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -63,7 +58,7 @@ namespace HopitalDll
         public void SaveVisite(Patients patient) // Dylan : methode d'ajout de patients à la liste
         {
             DateTime date = DateTime.Now;
-            Visites visite= new Visites(patient.IdPatient, Nom, Convert.ToString(date), COUTVISITE, Salle);
+            Visites visite= new Visites(patient.IdPatient, Nom, date, COUTVISITE, Salle);
             Console.WriteLine(visite.ToString());
             ListeVisites.Add(visite);
         }

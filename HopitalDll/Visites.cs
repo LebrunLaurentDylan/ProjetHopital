@@ -21,7 +21,7 @@ namespace HopitalData
         private int idPatient;
         private string nomMedecin;
         private int numSalle;
-        private string dateVisite;
+        private DateTime dateVisite;
         private int coutVisite = 23;
 
         [NonSerialized]
@@ -32,7 +32,7 @@ namespace HopitalData
         public int NumVisite { set =>numVisite= value; }
         public int NumSalle { get => numSalle; set => numSalle = value; }
         public string NomMedecin { get => nomMedecin; set => nomMedecin = value; }
-        public string DateVisite { get => dateVisite; set => dateVisite = value; }
+        public DateTime DateVisite { get => dateVisite; set => dateVisite = value; }
         public int CoutVisite { get => coutVisite; set => coutVisite = value; }
 
         // constructeur
@@ -40,7 +40,7 @@ namespace HopitalData
         {
 
         }
-        public Visites(int idPatient, string nomMedecin, int numSalle, string dateVisite)
+        public Visites(int idPatient, string nomMedecin, int numSalle, DateTime dateVisite)
         {
             this.idPatient = idPatient;
             this.nomMedecin = nomMedecin;
@@ -48,7 +48,7 @@ namespace HopitalData
             this.dateVisite = dateVisite;
         }
 
-        public Visites(int idPatient, string nomMedecin, string dateVisite, int coutVisite, int numSalle)
+        public Visites(int idPatient, string nomMedecin, DateTime dateVisite, int coutVisite, int numSalle)
         {
             //this.numVisite = numVisite;
             this.idPatient = idPatient;
@@ -58,7 +58,7 @@ namespace HopitalData
             this.numSalle = numSalle;
         }
 
-        public Visites(int numVisite, int idPatient, string nomMedecin, string dateVisite, int coutVisite, int numSalle)
+        public Visites(int numVisite, int idPatient, string nomMedecin, DateTime dateVisite, int coutVisite, int numSalle)
         {
             this.numVisite = numVisite;
             this.idPatient = idPatient;
