@@ -151,6 +151,10 @@ namespace ProjetHopital
         {
             if (TraiterPatient(auth) == true)
                 Console.WriteLine("La salle a été rendue disponible.");
+            else
+            {
+                Console.WriteLine("La salle est n'est pas disponible.");
+            }
         }
 
         public static void AfficherListeVisiteIdPatient(Authentification auth)
